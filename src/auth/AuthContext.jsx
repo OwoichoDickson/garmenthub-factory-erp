@@ -60,6 +60,11 @@ export function AuthProvider({ children }) {
         password,
         options: { data: { full_name: fullName } },
       }),
+    signInWithGoogle: () =>
+      supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.origin },
+      }),
     signOut: () => supabase.auth.signOut(),
   }
 

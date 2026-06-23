@@ -56,7 +56,12 @@ begin
   values (
     new.id,
     new.email,
-    coalesce(new.raw_user_meta_data->>'full_name', split_part(new.email, '@', 1)),
+    -- email/password sign-up sends full_name; Google OAuth sends name/full_name
+    coalesce(
+      new.raw_user_meta_data->>'full_name',
+      new.raw_user_meta_data->>'name',
+      split_part(new.email, '@', 1)
+    ),
     case when user_count = 0 then 'admin' else 'office_admin' end
   );
   return new;
