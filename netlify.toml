@@ -1,0 +1,13 @@
+# Netlify build & deploy settings for GarmentHub — Factory ERP (Vite SPA)
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Single-page app: send all routes to index.html so React Router can handle them.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GarmentHub — Factory ERP · User Manual</title>
+<style>
+  :root{
+    --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --brand:#2563eb;
+    --panel:#0f172a; --canvas:#0b1120; --accent:#3b82f6;
+    --soft:#f1f5f9; --soft2:#f8fafc; --green:#059669; --amber:#b45309; --red:#dc2626;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;color:var(--ink);background:#fff;
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px 80px}
+  header.cover{
+    background:linear-gradient(135deg,#0b1120,#15233f);color:#e2e8f0;
+    padding:56px 24px;text-align:center;border-bottom:4px solid var(--accent);
+  }
+  .logo{width:64px;height:64px;border-radius:16px;background:var(--accent);display:inline-grid;place-items:center;margin-bottom:16px}
+  .logo svg{width:34px;height:34px}
+  header.cover h1{margin:0;font-size:34px;letter-spacing:-.5px}
+  header.cover p{margin:6px 0 0;color:#94a3b8}
+  .badge{display:inline-block;margin-top:18px;padding:5px 12px;border:1px solid #334155;border-radius:999px;font-size:12px;color:#cbd5e1}
+  h2{font-size:24px;margin:48px 0 8px;padding-top:12px;border-top:1px solid var(--line);letter-spacing:-.3px}
+  h2:first-of-type{border-top:0}
+  h3{font-size:18px;margin:28px 0 6px;color:#1e293b}
+  h4{font-size:15px;margin:18px 0 4px;color:#334155}
+  p{margin:8px 0}
+  a{color:var(--brand);text-decoration:none}
+  ul,ol{margin:8px 0 8px 4px;padding-left:22px}
+  li{margin:4px 0}
+  code{background:var(--soft);padding:2px 6px;border-radius:5px;font-size:.88em;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .toc{background:var(--soft2);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:28px 0}
+  .toc h2{border:0;margin:0 0 10px;padding:0;font-size:18px}
+  .toc ol{columns:2;column-gap:32px}
+  .toc a{color:#334155}
+  figure{margin:20px 0;text-align:center}
+  figure svg{width:100%;height:auto;border:1px solid #1e293b;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,.25)}
+  figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+  .callout{border-radius:12px;padding:14px 16px;margin:16px 0;font-size:14.5px;border:1px solid}
+  .tip{background:#eff6ff;border-color:#bfdbfe}
+  .warn{background:#fffbeb;border-color:#fde68a}
+  .note{background:#f0fdf4;border-color:#bbf7d0}
+  .callout b{display:block;margin-bottom:2px}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--soft);font-weight:600}
+  .role-pill{display:inline-block;background:#dbeafe;color:#1e40af;border-radius:6px;padding:1px 7px;font-size:12px;font-weight:600}
+  details{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0 14px;background:#fff}
+  details[open]{background:var(--soft2)}
+  summary{cursor:pointer;font-weight:600;padding:12px 0;color:#1e293b;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"＋";color:var(--brand);font-weight:700;margin-right:10px}
+  details[open] summary::before{content:"−"}
+  details .body{padding:0 0 14px;font-size:14.5px;color:#334155}
+  .steps{counter-reset:s;list-style:none;padding-left:0}
+  .steps li{counter-increment:s;position:relative;padding:6px 0 6px 38px;margin:0}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:6px;width:24px;height:24px;background:var(--brand);color:#fff;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700}
+  .kbd{font-family:ui-monospace,monospace;background:#1e293b;color:#e2e8f0;padding:2px 7px;border-radius:5px;font-size:12px}
+  .printbtn{position:fixed;right:18px;bottom:18px;background:var(--brand);color:#fff;border:0;border-radius:10px;padding:11px 16px;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(37,99,235,.4)}
+  @media print{
+    .printbtn,.toc{display:none}
+    header.cover{padding:30px}
+    figure svg{box-shadow:none}
+    h2{page-break-after:avoid}
+    details{break-inside:avoid}
+    details[open]{background:#fff}
+  }
+  @media(max-width:620px){.toc ol{columns:1}}
+</style>
+</head>
+<body>
+
+<button class="printbtn" onclick="window.print()">🖨 Print / Save as PDF</button>
+
+<header class="cover">
+  <div class="logo">
+    <svg viewBox="0 0 32 32" fill="none"><path d="M9 8h14l-3 4 3 4-3 8h-8l-3-8 3-4-3-4z" fill="#fff"/><circle cx="16" cy="13" r="2" fill="#3b82f6"/></svg>
+  </div>
+  <h1>GarmentHub — Factory ERP</h1>
+  <p>User Manual · Enugu Fashion &amp; Garment Hub</p>
+  <span class="badge">Version 1.0 · Web application</span>
+</header>
+
+<div class="wrap">
+
+<p style="margin-top:28px">Welcome to <b>GarmentHub</b>, the management system for the Enugu Fashion &amp; Garment Hub.
+It brings your whole factory — workers, attendance, production, inventory, sales and reports —
+into one place. This manual walks you through every screen, shows you what each looks like,
+and answers the questions people ask most.</p>
+
+<div class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#start">Getting started &amp; logging in</a></li>
+    <li><a href="#roles">Roles &amp; who sees what</a></li>
+    <li><a href="#layout">Finding your way around</a></li>
+    <li><a href="#dashboard">The Dashboard</a></li>
+    <li><a href="#workers">Workers</a></li>
+    <li><a href="#attendance">Attendance</a></li>
+    <li><a href="#production">Production</a></li>
+    <li><a href="#weekly">Weekly Tracker &amp; PDF export</a></li>
+    <li><a href="#hourly">Hourly Tracker</a></li>
+    <li><a href="#inventory">Raw Materials &amp; Finished Products</a></li>
+    <li><a href="#movements">Stock Movements</a></li>
+    <li><a href="#bin">Bin Book</a></li>
+    <li><a href="#sales">Sales / POS</a></li>
+    <li><a href="#people">Customers &amp; Suppliers</a></li>
+    <li><a href="#finances">Finances</a></li>
+    <li><a href="#power">Power Outage log</a></li>
+    <li><a href="#reports">Reports &amp; Director's View</a></li>
+    <li><a href="#import">Import Center (CSV)</a></li>
+    <li><a href="#users">Users &amp; Roles</a></li>
+    <li><a href="#workflows">Everyday workflows</a></li>
+    <li><a href="#faq">Frequently asked questions</a></li>
+  </ol>
+</div>
+
+<!-- ============================ GETTING STARTED ============================ -->
+<h2 id="start">1 · Getting started &amp; logging in</h2>
+
+<p>GarmentHub runs in your web browser. Open the address your administrator gave you (for local use,
+that is usually <code>http://localhost:5173</code>). You'll see the sign-in screen.</p>
+
+<figure>
+<svg viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="360" fill="#0b1120"/>
+  <g transform="translate(330,60)">
+    <rect x="0" y="0" width="220" height="240" rx="16" fill="#0f172a" stroke="#1e293b"/>
+    <rect x="86" y="-24" width="48" height="48" rx="12" fill="#3b82f6"/>
+    <path d="M99 -12h22l-5 6 5 6-5 12h-12l-5-12 5-6-5-6z" fill="#fff"/>
+    <text x="110" y="44" fill="#f1f5f9" font-size="15" font-weight="700" text-anchor="middle" font-family="sans-serif">GarmentHub</text>
+    <rect x="20" y="60" width="180" height="30" rx="7" fill="#0b1120" stroke="#334155"/>
+    <rect x="20" y="60" width="90" height="30" rx="7" fill="#3b82f6"/>
+    <text x="65" y="80" fill="#fff" font-size="11" text-anchor="middle" font-family="sans-serif">Sign in</text>
+    <text x="155" y="80" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="sans-serif">Create account</text>
+    <rect x="20" y="104" width="180" height="30" rx="7" fill="#0f172a" stroke="#334155"/>
+    <text x="30" y="123" fill="#64748b" font-size="11" font-family="sans-serif">you@factory.ng</text>
+    <rect x="20" y="142" width="180" height="30" rx="7" fill="#0f172a" stroke="#334155"/>
+    <text x="30" y="161" fill="#64748b" font-size="11" font-family="sans-serif">••••••••</text>
+    <rect x="20" y="184" width="180" height="34" rx="8" fill="#3b82f6"/>
+    <text x="110" y="206" fill="#fff" font-size="13" font-weight="600" text-anchor="middle" font-family="sans-serif">Sign in</text>
+  </g>
+</svg>
+<figcaption>The sign-in screen. Use the two tabs to switch between “Sign in” and “Create account”.</figcaption>
+</figure>
+
+<h3>Creating your account</h3>
+<ol class="steps">
+  <li>Click the <b>Create account</b> tab.</li>
+  <li>Enter your full name, email, and a password (at least 6 characters).</li>
+  <li>Click <b>Create account</b>, then sign in.</li>
+</ol>
+
+<div class="callout note"><b>The very first account becomes the Administrator</b>
+Whoever signs up first automatically gets full access. Everyone after that starts as an Office Admin
+until an administrator changes their role on the <a href="#users">Users &amp; Roles</a> page.</div>
+
+<div class="callout tip"><b>Forgotten where things are?</b>
+Your role decides which pages you can see — so your menu may be shorter than a colleague's. That's normal.</div>
+
+<!-- ============================ ROLES ============================ -->
+<h2 id="roles">2 · Roles &amp; who sees what</h2>
+<p>Every person has one role. The menu on the left automatically shows only the pages that role is allowed to use.</p>
+
+<table>
+  <tr><th>Role</th><th>Can access</th></tr>
+  <tr><td><span class="role-pill">Administrator</span> / Factory Admin / Manager</td><td>Everything</td></tr>
+  <tr><td><span class="role-pill">Director</span></td><td>Director's View only</td></tr>
+  <tr><td><span class="role-pill">Supervisor</span></td><td>Production, Weekly Tracker</td></tr>
+  <tr><td><span class="role-pill">Office Admin</span></td><td>Workers, Attendance, Power Outage</td></tr>
+  <tr><td><span class="role-pill">Storekeeper</span></td><td>Raw Materials, Finished Products, Stock Movements, Suppliers, Power Outage, Bin Book</td></tr>
+  <tr><td><span class="role-pill">Floor Assistant</span></td><td>Weekly Tracker, Hourly Tracker</td></tr>
+</table>
+
+<!-- ============================ LAYOUT ============================ -->
+<h2 id="layout">3 · Finding your way around</h2>
+
+<figure>
+<svg viewBox="0 0 880 470" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="470" fill="#0b1120"/>
+  <!-- sidebar -->
+  <rect x="0" y="0" width="210" height="470" fill="#0f172a" stroke="#1e293b"/>
+  <rect x="20" y="22" width="34" height="34" rx="9" fill="#3b82f6"/>
+  <path d="M30 32h14l-3 4 3 4-3 8h-8l-3-8 3-4-3-4z" fill="#fff" transform="translate(-1,-2) scale(0.9)"/>
+  <text x="64" y="36" fill="#f1f5f9" font-size="13" font-weight="700" font-family="sans-serif">GarmentHub</text>
+  <text x="64" y="50" fill="#64748b" font-size="9" font-family="sans-serif">Factory ERP</text>
+  <!-- shift card -->
+  <rect x="14" y="70" width="182" height="44" rx="10" fill="#0b1120" stroke="#1e293b"/>
+  <circle cx="28" cy="88" r="4" fill="#fbbf24"/>
+  <text x="40" y="92" fill="#cbd5e1" font-size="10" font-family="sans-serif">Morning Shift</text>
+  <text x="150" y="92" fill="#64748b" font-size="10" font-family="sans-serif">08:14</text>
+  <text x="40" y="106" fill="#64748b" font-size="9" font-family="sans-serif">6am – 2pm</text>
+  <!-- nav -->
+  <g font-family="sans-serif" font-size="11">
+    <text x="20" y="138" fill="#475569" font-size="9">OVERVIEW</text>
+    <rect x="14" y="146" width="182" height="26" rx="7" fill="#3b82f6" opacity="0.18"/>
+    <text x="24" y="163" fill="#60a5fa">▦ Dashboard</text>
+    <text x="20" y="194" fill="#475569" font-size="9">PRODUCTION</text>
+    <text x="24" y="214" fill="#94a3b8">🏭 Production</text>
+    <text x="24" y="236" fill="#94a3b8">▤ Weekly Tracker</text>
+    <text x="24" y="258" fill="#94a3b8">⏱ Hourly Tracker</text>
+    <text x="20" y="288" fill="#475569" font-size="9">INVENTORY</text>
+    <text x="24" y="308" fill="#94a3b8">▣ Raw Materials</text>
+    <text x="24" y="330" fill="#94a3b8">👕 Finished Products</text>
+    <text x="20" y="360" fill="#475569" font-size="9">WORKFORCE</text>
+    <text x="24" y="380" fill="#94a3b8">👥 Workers</text>
+    <text x="24" y="402" fill="#94a3b8">📅 Attendance</text>
+  </g>
+  <!-- user -->
+  <rect x="14" y="424" width="182" height="34" rx="9" fill="#0b1120" stroke="#1e293b"/>
+  <circle cx="32" cy="441" r="11" fill="#1e3a8a"/>
+  <text x="32" y="445" fill="#93c5fd" font-size="10" text-anchor="middle" font-family="sans-serif">JD</text>
+  <text x="50" y="438" fill="#e2e8f0" font-size="10" font-family="sans-serif">Jane Doe</text>
+  <text x="50" y="450" fill="#64748b" font-size="9" font-family="sans-serif">Administrator</text>
+  <!-- main -->
+  <text x="240" y="44" fill="#f1f5f9" font-size="20" font-weight="700" font-family="sans-serif">Dashboard</text>
+  <text x="240" y="64" fill="#64748b" font-size="11" font-family="sans-serif">Morning shift · 6am – 2pm</text>
+  <g>
+    <rect x="240" y="84" width="145" height="74" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <rect x="400" y="84" width="145" height="74" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <rect x="560" y="84" width="145" height="74" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <rect x="720" y="84" width="140" height="74" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <text x="256" y="108" fill="#64748b" font-size="9" font-family="sans-serif">TOTAL WORKERS</text>
+    <text x="256" y="134" fill="#f1f5f9" font-size="22" font-weight="700" font-family="sans-serif">42</text>
+    <text x="416" y="108" fill="#64748b" font-size="9" font-family="sans-serif">ATTENDANCE</text>
+    <text x="416" y="134" fill="#34d399" font-size="22" font-weight="700" font-family="sans-serif">38</text>
+    <text x="576" y="108" fill="#64748b" font-size="9" font-family="sans-serif">ACTIVE ORDERS</text>
+    <text x="576" y="134" fill="#a78bfa" font-size="22" font-weight="700" font-family="sans-serif">7</text>
+    <text x="736" y="108" fill="#64748b" font-size="9" font-family="sans-serif">LOW STOCK</text>
+    <text x="736" y="134" fill="#fbbf24" font-size="22" font-weight="700" font-family="sans-serif">3</text>
+  </g>
+  <rect x="240" y="172" width="300" height="160" rx="12" fill="#0f172a" stroke="#1e293b"/>
+  <text x="256" y="194" fill="#cbd5e1" font-size="11" font-family="sans-serif">Attendance Trend</text>
+  <polyline points="256,300 300,280 344,288 388,250 432,262 476,228 520,236" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+  <rect x="560" y="172" width="300" height="160" rx="12" fill="#0f172a" stroke="#1e293b"/>
+  <text x="576" y="194" fill="#cbd5e1" font-size="11" font-family="sans-serif">Production by Department</text>
+  <g fill="#3b82f6">
+    <rect x="584" y="280" width="34" height="36"/><rect x="630" y="250" width="34" height="66"/>
+    <rect x="676" y="266" width="34" height="50"/><rect x="722" y="236" width="34" height="80"/>
+    <rect x="768" y="288" width="34" height="28"/>
+  </g>
+</svg>
+<figcaption>A typical screen: the dark sidebar on the left, your name and role at the bottom, and the page content on the right.</figcaption>
+</figure>
+
+<ul>
+  <li><b>Sidebar</b> — your menu. Group headings (Overview, Production, Inventory…) can be collapsed by clicking them.</li>
+  <li><b>Live shift indicator</b> — shows the current shift (Morning / Afternoon / Night) and a running clock, so you always know which shift you're recording for.</li>
+  <li><b>Your account</b> — bottom-left shows your name and role, with a <b>log-out</b> button.</li>
+  <li><b>On a phone</b> — tap the <b>☰</b> menu icon at the top to open the sidebar.</li>
+</ul>
+
+<!-- ============================ DASHBOARD ============================ -->
+<h2 id="dashboard">4 · The Dashboard</h2>
+<p>Your home screen. At a glance it shows four key numbers — <b>Total Workers</b>, <b>Today's Attendance</b>,
+<b>Active Production Orders</b>, and <b>Low Stock Materials</b> — plus charts for attendance trend and
+production by department, and a recent-activity feed.</p>
+<div class="callout tip"><b>It knows the time of day</b> The greeting and the shift line update with the current shift automatically.</div>
+
+<!-- ============================ WORKERS ============================ -->
+<h2 id="workers">5 · Workers</h2>
+<p>Your staff register. Each worker has a name, employee ID, role, department, team, shift, phone, hourly rate, status and hire date.</p>
+
+<figure>
+<svg viewBox="0 0 880 210" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="210" fill="#0b1120"/>
+  <g font-family="sans-serif">
+    <rect x="24" y="14" width="196" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="40" y="34" fill="#64748b" font-size="9">TOTAL WORKERS</text><text x="40" y="56" fill="#f1f5f9" font-size="19" font-weight="700">42</text>
+    <rect x="232" y="14" width="196" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="248" y="34" fill="#64748b" font-size="9">ACTIVE</text><text x="248" y="56" fill="#34d399" font-size="19" font-weight="700">38</text>
+    <rect x="440" y="14" width="196" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="456" y="34" fill="#64748b" font-size="9">ON LEAVE</text><text x="456" y="56" fill="#fbbf24" font-size="19" font-weight="700">3</text>
+    <rect x="648" y="14" width="208" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="664" y="34" fill="#64748b" font-size="9">TERMINATED</text><text x="664" y="56" fill="#f87171" font-size="19" font-weight="700">1</text>
+    <rect x="24" y="80" width="832" height="118" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <g font-size="9.5" fill="#64748b"><text x="44" y="102">NAME</text><text x="220" y="102">EMP ID</text><text x="340" y="102">ROLE</text><text x="500" y="102">DEPT</text><text x="640" y="102">SHIFT</text><text x="760" y="102">STATUS</text></g>
+    <line x1="44" y1="110" x2="836" y2="110" stroke="#1e293b"/>
+    <g font-size="11" fill="#cbd5e1">
+      <text x="44" y="132">Adaeze Okeke</text><text x="220" y="132">EMP-001</text><text x="340" y="132">Operator</text><text x="500" y="132">Sewing</text><text x="640" y="132">Morning</text>
+      <rect x="760" y="121" width="56" height="17" rx="8" fill="#064e3b"/><text x="788" y="133" fill="#6ee7b7" font-size="9" text-anchor="middle">Active</text>
+      <text x="44" y="160">Ifeanyi Okafor</text><text x="220" y="160">EMP-006</text><text x="340" y="160">Technician</text><text x="500" y="160">Finishing</text><text x="640" y="160">Night</text>
+      <rect x="760" y="149" width="64" height="17" rx="8" fill="#451a03"/><text x="792" y="161" fill="#fcd34d" font-size="9" text-anchor="middle">On leave</text>
+      <text x="44" y="188">Uchenna Madu</text><text x="220" y="188">EMP-010</text><text x="340" y="188">Floor Asst.</text><text x="500" y="188">Packaging</text><text x="640" y="188">Morning</text>
+      <rect x="760" y="177" width="72" height="17" rx="8" fill="#450a0a"/><text x="796" y="189" fill="#fca5a5" font-size="9" text-anchor="middle">Terminated</text>
+    </g>
+  </g>
+</svg>
+<figcaption>The Workers register — KPI cards on top, searchable/filterable table with coloured status badges. Most list pages share this layout.</figcaption>
+</figure>
+<h4>Add a worker</h4>
+<ol class="steps">
+  <li>Click <b>+ New Worker</b> (top-right).</li>
+  <li>Fill in the form. Name is required; the rest is optional.</li>
+  <li>Click <b>Save</b>.</li>
+</ol>
+<p>Use the search box and the Status / Department / Role dropdowns to find people. Coloured badges show status:
+<span style="color:var(--green)">●</span> active, <span style="color:var(--amber)">●</span> on leave, <span style="color:var(--red)">●</span> terminated.</p>
+<div class="callout warn"><b>Attendance needs workers first</b> You can only mark attendance for people who exist here. If the Workers list is empty, add staff (or import them) before using Attendance.</div>
+
+<!-- ============================ ATTENDANCE ============================ -->
+<h2 id="attendance">6 · Attendance</h2>
+
+<figure>
+<svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="300" fill="#0b1120"/>
+  <!-- KPIs -->
+  <g font-family="sans-serif">
+    <rect x="24" y="20" width="196" height="56" rx="11" fill="#0f172a" stroke="#1e293b"/>
+    <text x="40" y="42" fill="#64748b" font-size="9">PRESENT</text><text x="40" y="64" fill="#34d399" font-size="20" font-weight="700">38</text>
+    <rect x="232" y="20" width="196" height="56" rx="11" fill="#0f172a" stroke="#1e293b"/>
+    <text x="248" y="42" fill="#64748b" font-size="9">ABSENT</text><text x="248" y="64" fill="#f87171" font-size="20" font-weight="700">2</text>
+    <rect x="440" y="20" width="196" height="56" rx="11" fill="#0f172a" stroke="#1e293b"/>
+    <text x="456" y="42" fill="#64748b" font-size="9">LATE</text><text x="456" y="64" fill="#fbbf24" font-size="20" font-weight="700">3</text>
+    <rect x="648" y="20" width="208" height="56" rx="11" fill="#0f172a" stroke="#1e293b"/>
+    <text x="664" y="42" fill="#64748b" font-size="9">ON LEAVE</text><text x="664" y="64" fill="#a78bfa" font-size="20" font-weight="700">1</text>
+  </g>
+  <!-- panel -->
+  <rect x="24" y="92" width="832" height="184" rx="12" fill="#0f172a" stroke="#1e293b"/>
+  <text x="44" y="118" fill="#94a3b8" font-size="10" font-family="sans-serif">DATE</text>
+  <rect x="44" y="124" width="150" height="30" rx="7" fill="#0b1120" stroke="#334155"/>
+  <text x="56" y="143" fill="#e2e8f0" font-size="11" font-family="sans-serif">2026-06-23</text>
+  <text x="212" y="118" fill="#94a3b8" font-size="10" font-family="sans-serif">WORKER</text>
+  <rect x="212" y="124" width="220" height="30" rx="7" fill="#0b1120" stroke="#334155"/>
+  <text x="226" y="143" fill="#e2e8f0" font-size="11" font-family="sans-serif">🔍 Adaeze Okeke</text>
+  <text x="392" y="143" fill="#34d399" font-size="10" font-family="sans-serif">✓ marked</text>
+  <!-- form row -->
+  <g font-family="sans-serif">
+    <text x="44" y="184" fill="#94a3b8" font-size="10">SHIFT</text>
+    <rect x="44" y="190" width="120" height="28" rx="7" fill="#0b1120" stroke="#334155"/><text x="56" y="208" fill="#e2e8f0" font-size="10">Morning</text>
+    <text x="180" y="184" fill="#94a3b8" font-size="10">CLOCK IN</text>
+    <rect x="180" y="190" width="100" height="28" rx="7" fill="#0b1120" stroke="#334155"/><text x="192" y="208" fill="#e2e8f0" font-size="10">06:02</text>
+    <text x="296" y="184" fill="#94a3b8" font-size="10">CLOCK OUT</text>
+    <rect x="296" y="190" width="100" height="28" rx="7" fill="#0b1120" stroke="#334155"/><text x="308" y="208" fill="#e2e8f0" font-size="10">14:10</text>
+    <text x="412" y="184" fill="#94a3b8" font-size="10">HOURS (AUTO)</text>
+    <rect x="412" y="190" width="120" height="28" rx="7" fill="#0b1120" stroke="#1e293b"/><text x="424" y="208" fill="#cbd5e1" font-size="10">8.1h  +0.1 OT</text>
+  </g>
+  <rect x="700" y="234" width="150" height="30" rx="8" fill="#3b82f6"/>
+  <text x="775" y="254" fill="#fff" font-size="12" font-weight="600" text-anchor="middle" font-family="sans-serif">Update attendance</text>
+</svg>
+<figcaption>Marking attendance: choose the date, search for the worker, set times — hours and overtime calculate themselves.</figcaption>
+</figure>
+
+<h4>How to mark attendance</h4>
+<ol class="steps">
+  <li>Pick the <b>date</b> (defaults to today).</li>
+  <li>Type a name in the <b>Worker</b> search box and select the person. A green <b>✓ marked</b> tick means they already have a record for that date.</li>
+  <li>The marking form appears. Choose shift, clock-in and clock-out times, and status.</li>
+  <li><b>Hours worked</b> and <b>overtime</b> (anything over 8 hours) are calculated for you.</li>
+  <li>Click <b>Mark attendance</b> (or <b>Update attendance</b> if editing).</li>
+</ol>
+<div class="callout tip"><b>Already marked? It switches to edit.</b> If the worker already has a record for that date <i>and shift</i>, the form loads their existing entry so you can correct it instead of creating a duplicate.</div>
+<div class="callout warn"><b>No “Mark attendance” button?</b> The button only appears <i>after</i> you select a worker. If you can't select anyone, your Workers list is empty — add workers first.</div>
+
+<!-- ============================ PRODUCTION ============================ -->
+<h2 id="production">7 · Production</h2>
+<p>Track production orders from cutting through packaging. Each order shows a progress bar
+(actual output ÷ target quantity) and a status: pending, in progress, completed or delayed.
+The four cards at the top summarise totals, completed, in-progress and delayed.</p>
+<figure>
+<svg viewBox="0 0 880 210" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="210" fill="#0b1120"/>
+  <g font-family="sans-serif">
+    <rect x="24" y="14" width="196" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="40" y="34" fill="#64748b" font-size="9">TOTAL ORDERS</text><text x="40" y="56" fill="#f1f5f9" font-size="19" font-weight="700">12</text>
+    <rect x="232" y="14" width="196" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="248" y="34" fill="#64748b" font-size="9">COMPLETED</text><text x="248" y="56" fill="#34d399" font-size="19" font-weight="700">5</text>
+    <rect x="440" y="14" width="196" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="456" y="34" fill="#64748b" font-size="9">IN PROGRESS</text><text x="456" y="56" fill="#fbbf24" font-size="19" font-weight="700">4</text>
+    <rect x="648" y="14" width="208" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="664" y="34" fill="#64748b" font-size="9">DELAYED</text><text x="664" y="56" fill="#f87171" font-size="19" font-weight="700">3</text>
+    <rect x="24" y="80" width="832" height="118" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <g font-size="9.5" fill="#64748b"><text x="44" y="102">ORDER #</text><text x="160" y="102">PRODUCT</text><text x="360" y="102">STAGE</text><text x="470" y="102">PROGRESS</text><text x="760" y="102">STATUS</text></g>
+    <line x1="44" y1="110" x2="836" y2="110" stroke="#1e293b"/>
+    <g font-size="11" fill="#cbd5e1">
+      <text x="44" y="134">PO-2026-001</text><text x="160" y="134">School Shirts</text><text x="360" y="134">Sewing</text>
+      <text x="470" y="129" fill="#64748b" font-size="9">640 / 1000 · 64%</text><rect x="470" y="134" width="220" height="6" rx="3" fill="#1e293b"/><rect x="470" y="134" width="141" height="6" rx="3" fill="#3b82f6"/>
+      <rect x="760" y="123" width="74" height="17" rx="8" fill="#1e3a8a"/><text x="797" y="135" fill="#93c5fd" font-size="9" text-anchor="middle">In progress</text>
+      <text x="44" y="170">PO-2026-003</text><text x="160" y="170">Pinafore Set</text><text x="360" y="170">Cutting</text>
+      <text x="470" y="165" fill="#64748b" font-size="9">120 / 800 · 15%</text><rect x="470" y="170" width="220" height="6" rx="3" fill="#1e293b"/><rect x="470" y="170" width="33" height="6" rx="3" fill="#fbbf24"/>
+      <rect x="760" y="159" width="60" height="17" rx="8" fill="#450a0a"/><text x="790" y="171" fill="#fca5a5" font-size="9" text-anchor="middle">Delayed</text>
+    </g>
+  </g>
+</svg>
+<figcaption>Production orders, each with a live progress bar (output ÷ target) and a status badge.</figcaption>
+</figure>
+
+<p>Filter by status, stage or shift; use the year and From/To date filters to narrow the list. Click the pencil to edit, the bin to delete.</p>
+
+<!-- ============================ WEEKLY ============================ -->
+<h2 id="weekly">8 · Weekly Tracker &amp; PDF export</h2>
+
+<figure>
+<svg viewBox="0 0 880 280" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="280" fill="#0b1120"/>
+  <!-- week nav -->
+  <rect x="24" y="20" width="832" height="44" rx="11" fill="#0f172a" stroke="#1e293b"/>
+  <rect x="300" y="30" width="26" height="24" rx="6" fill="#1e293b"/><text x="313" y="47" fill="#cbd5e1" font-size="13" text-anchor="middle" font-family="sans-serif">‹</text>
+  <text x="440" y="42" fill="#f1f5f9" font-size="12" font-weight="700" text-anchor="middle" font-family="sans-serif">Jun 22 – Jun 28</text>
+  <text x="440" y="56" fill="#64748b" font-size="9" text-anchor="middle" font-family="sans-serif">2026</text>
+  <rect x="556" y="30" width="26" height="24" rx="6" fill="#1e293b"/><text x="569" y="47" fill="#cbd5e1" font-size="13" text-anchor="middle" font-family="sans-serif">›</text>
+  <rect x="790" y="28" width="56" height="28" rx="7" fill="#0b1120" stroke="#334155"/><text x="818" y="46" fill="#e2e8f0" font-size="11" text-anchor="middle" font-family="sans-serif">2026 ▾</text>
+  <!-- tabs -->
+  <g font-family="sans-serif" font-size="11">
+    <rect x="24" y="78" width="70" height="26" rx="13" fill="#3b82f6"/><text x="59" y="95" fill="#fff" text-anchor="middle">Sewing</text>
+    <rect x="102" y="78" width="68" height="26" rx="13" fill="#1e293b"/><text x="136" y="95" fill="#cbd5e1" text-anchor="middle">Cutting</text>
+    <rect x="178" y="78" width="78" height="26" rx="13" fill="#1e293b"/><text x="217" y="95" fill="#cbd5e1" text-anchor="middle">Finishing</text>
+    <rect x="264" y="78" width="68" height="26" rx="13" fill="#1e293b"/><text x="298" y="95" fill="#cbd5e1" text-anchor="middle">Ironing</text>
+  </g>
+  <!-- grid -->
+  <rect x="24" y="118" width="832" height="142" rx="12" fill="#0f172a" stroke="#1e293b"/>
+  <g font-family="sans-serif" font-size="10" fill="#64748b">
+    <text x="40" y="140">DATE</text><text x="120" y="140">TEAM</text><text x="220" y="140">PRODUCT</text>
+    <text x="430" y="140">TARGET</text><text x="510" y="140">DAY</text><text x="580" y="140">NIGHT</text><text x="660" y="140">TOTAL</text><text x="760" y="140">EFFICIENCY</text>
+  </g>
+  <line x1="40" y1="150" x2="840" y2="150" stroke="#1e293b"/>
+  <g font-family="sans-serif" font-size="10.5" fill="#cbd5e1">
+    <text x="40" y="172">22 Jun</text><text x="120" y="172">Team A</text><text x="220" y="172">Shirts</text>
+    <text x="430" y="172">120</text><text x="510" y="172">110</text><text x="580" y="172">40</text><text x="660" y="172" fill="#f1f5f9" font-weight="700">150</text><text x="760" y="172" fill="#34d399" font-weight="700">125%</text>
+    <text x="40" y="200">23 Jun</text><text x="120" y="200">Team A</text><text x="220" y="200">Shirts</text>
+    <text x="430" y="200">120</text><text x="510" y="200">95</text><text x="580" y="200">0</text><text x="660" y="200" fill="#f1f5f9" font-weight="700">95</text><text x="760" y="200" fill="#fbbf24" font-weight="700">79%</text>
+  </g>
+  <line x1="40" y1="216" x2="840" y2="216" stroke="#1e293b"/>
+  <g font-family="sans-serif" font-size="10.5" fill="#e2e8f0" font-weight="700">
+    <text x="40" y="240">Week totals</text><text x="430" y="240">240</text><text x="510" y="240">205</text><text x="580" y="240">40</text><text x="660" y="240">245</text><text x="760" y="240" fill="#34d399">102%</text>
+  </g>
+</svg>
+<figcaption>The Weekly Tracker: department tabs, a week you can step through, and a totals row at the bottom.</figcaption>
+</figure>
+
+<h4>Reading the grid</h4>
+<p>Each department has a tab (Sewing, Cutting, Finishing, Ironing, Packaging/QC). For the chosen week it lists every entry with target, day output, night output, total and an <b>efficiency %</b> (green = on/over target, amber/red = below). The bottom row totals the week.</p>
+
+<h4>Moving between weeks &amp; years</h4>
+<ul>
+  <li>Use the <b>‹ ›</b> arrows to step one week back or forward.</li>
+  <li>Pick a <b>year</b> from the dropdown — this jumps the view to the start of that year, then step forward with <b>›</b> to reach any week.</li>
+</ul>
+
+<h4>Add / edit an entry</h4>
+<ol class="steps">
+  <li>Click <b>+ New Entry</b>, choose the date, department, team/worker, product and the target/day/night numbers.</li>
+  <li>Save. To change or remove an entry, use the pencil / bin icons on its row.</li>
+</ol>
+
+<div class="callout tip"><b>Export to PDF</b> Click <b>Export PDF</b> to download a tidy landscape report of <i>all</i> entries for the selected year, grouped by month with monthly totals — ready to print or email.</div>
+
+<!-- ============================ HOURLY ============================ -->
+<h2 id="hourly">9 · Hourly Tracker</h2>
+<p>For finer detail, log output hour-by-hour per worker: date, hour, shift, department, units produced and defects. Filter by date, shift or department. Useful for spotting which hours of the shift are most productive.</p>
+<p style="color:var(--muted);font-size:14px"><i>Layout: the same card-and-table style shown for Workers above, with columns for date, hour, worker, units and defects.</i></p>
+
+<!-- ============================ INVENTORY ============================ -->
+<h2 id="inventory">10 · Raw Materials &amp; Finished Products</h2>
+<h3>Raw Materials</h3>
+<p>Your fabric and supplies store: fabric type, colour, GSM, cost, batch number, warehouse location, supplier, quantity, unit and reorder level. Rows at or below their reorder level are <b>highlighted</b>, and the cards count In Stock / Low Stock / Out of Stock.</p>
+
+<figure>
+<svg viewBox="0 0 880 210" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="210" fill="#0b1120"/>
+  <g font-family="sans-serif">
+    <rect x="24" y="14" width="196" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="40" y="34" fill="#64748b" font-size="9">TOTAL</text><text x="40" y="56" fill="#f1f5f9" font-size="19" font-weight="700">5</text>
+    <rect x="232" y="14" width="196" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="248" y="34" fill="#64748b" font-size="9">IN STOCK</text><text x="248" y="56" fill="#34d399" font-size="19" font-weight="700">3</text>
+    <rect x="440" y="14" width="196" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="456" y="34" fill="#64748b" font-size="9">LOW STOCK</text><text x="456" y="56" fill="#fbbf24" font-size="19" font-weight="700">1</text>
+    <rect x="648" y="14" width="208" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="664" y="34" fill="#64748b" font-size="9">OUT OF STOCK</text><text x="664" y="56" fill="#f87171" font-size="19" font-weight="700">1</text>
+    <rect x="24" y="80" width="832" height="118" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <g font-size="9.5" fill="#64748b"><text x="44" y="102">FABRIC</text><text x="220" y="102">COLOUR</text><text x="340" y="102">QTY</text><text x="440" y="102">REORDER</text><text x="560" y="102">SUPPLIER</text><text x="760" y="102">STATUS</text></g>
+    <line x1="44" y1="110" x2="836" y2="110" stroke="#1e293b"/>
+    <g font-size="11" fill="#cbd5e1">
+      <text x="44" y="132">Cotton Poplin</text><text x="220" y="132">White</text><text x="340" y="132">420</text><text x="440" y="132">100</text><text x="560" y="132">Aba Textiles</text>
+      <rect x="760" y="121" width="56" height="17" rx="8" fill="#064e3b"/><text x="788" y="133" fill="#6ee7b7" font-size="9" text-anchor="middle">In stock</text>
+      <rect x="32" y="142" width="816" height="26" rx="6" fill="#3b2407" opacity="0.5"/>
+      <text x="44" y="160">Polyester</text><text x="220" y="160">Navy</text><text x="340" y="160" fill="#fbbf24">80</text><text x="440" y="160">100</text><text x="560" y="160">Lagos Fabrics</text>
+      <rect x="760" y="149" width="64" height="17" rx="8" fill="#451a03"/><text x="792" y="161" fill="#fcd34d" font-size="9" text-anchor="middle">Low stock</text>
+      <text x="44" y="188">Denim</text><text x="220" y="188">Indigo</text><text x="340" y="188" fill="#f87171">0</text><text x="440" y="188">50</text><text x="560" y="188">Kano Mills</text>
+      <rect x="760" y="177" width="76" height="17" rx="8" fill="#450a0a"/><text x="798" y="189" fill="#fca5a5" font-size="9" text-anchor="middle">Out of stock</text>
+    </g>
+  </g>
+</svg>
+<figcaption>Raw Materials — low-stock rows are highlighted amber so you can spot what needs reordering.</figcaption>
+</figure>
+<h3>Finished Products</h3>
+<p>Goods ready to sell: SKU, name, size, colour, design code, batch, cost &amp; selling price, quantity available and category. Filter by category or size.</p>
+<p style="color:var(--muted);font-size:14px"><i>Layout: the same card-and-table style shown for Workers, with columns for SKU, size, colour, category and price.</i></p>
+<div class="callout warn"><b>Good to know</b> Stock quantities change only when you edit a record. Logging a Stock Movement or a Sale does <i>not</i> automatically adjust these numbers in this version.</div>
+
+<!-- ============================ MOVEMENTS ============================ -->
+<h2 id="movements">11 · Stock Movements</h2>
+<p>A running log of stock activity — stock in, stock out, adjustments, production use/output and sales.
+Record the item, type, quantity and a reference. Think of it as your inventory diary.</p>
+<p style="color:var(--muted);font-size:14px"><i>Layout: the same card-and-table style as Workers, with a coloured badge for each movement type and a date column.</i></p>
+
+<!-- ============================ BIN BOOK ============================ -->
+<h2 id="bin">12 · Bin Book</h2>
+<p>Tracks small consumables (thread, zips, elastic, needles…) across <b>Store A</b> and <b>Store B</b>. Two tabs:</p>
+
+<figure>
+<svg viewBox="0 0 880 190" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="190" fill="#0b1120"/>
+  <g font-family="sans-serif">
+    <rect x="24" y="16" width="150" height="28" rx="7" fill="#0b1120" stroke="#1e293b"/>
+    <rect x="27" y="19" width="72" height="22" rx="5" fill="#3b82f6"/><text x="63" y="34" fill="#fff" font-size="10" text-anchor="middle">Items</text>
+    <text x="135" y="34" fill="#94a3b8" font-size="10" text-anchor="middle">Entries</text>
+    <rect x="610" y="16" width="246" height="28" rx="7" fill="#3b82f6"/><text x="733" y="34" fill="#fff" font-size="10" text-anchor="middle" font-weight="600">+ Log Issuance</text>
+    <rect x="24" y="56" width="832" height="118" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <g font-size="9.5" fill="#64748b"><text x="44" y="78">ITEM</text><text x="240" y="78">CATEGORY</text><text x="380" y="78">STORE</text><text x="520" y="78">CURRENT</text><text x="660" y="78">REORDER</text></g>
+    <line x1="44" y1="86" x2="836" y2="86" stroke="#1e293b"/>
+    <g font-size="11" fill="#cbd5e1">
+      <text x="44" y="108">White Thread</text><text x="240" y="108">Thread</text><text x="380" y="108">Store A</text><text x="520" y="108">145 rolls</text><text x="660" y="108">50</text>
+      <rect x="32" y="118" width="816" height="26" rx="6" fill="#3b2407" opacity="0.5"/>
+      <text x="44" y="136" >Elastic 25mm</text><text x="240" y="136">Elastic</text><text x="380" y="136">Store B</text><text x="520" y="136" fill="#fbbf24">90 m</text><text x="660" y="136">80</text>
+      <text x="44" y="164">Tailor Chalk</text><text x="240" y="164">Chalk</text><text x="380" y="164">Store B</text><text x="520" y="164" fill="#fbbf24">12 boxes</text><text x="660" y="164">15</text>
+    </g>
+  </g>
+</svg>
+<figcaption>Bin Book — switch between Items and Entries tabs; issuing a consumable lowers its stock automatically.</figcaption>
+</figure>
+<ul>
+  <li><b>Items</b> — the things you stock, with opening stock, current stock and reorder level. Low items are highlighted.</li>
+  <li><b>Entries</b> — daily issuances. When you log an issuance, the item's current stock <b>drops automatically</b>. Delete an issuance and the stock is <b>added back</b>.</li>
+</ul>
+<h4>Log an issuance</h4>
+<ol class="steps">
+  <li>On the <b>Entries</b> tab click <b>+ Log Issuance</b>.</li>
+  <li>Pick the item (it shows how much you currently have), set the quantity issued and who it went to.</li>
+  <li>Save — the new stock level is shown before you confirm.</li>
+</ol>
+
+<!-- ============================ SALES ============================ -->
+<h2 id="sales">13 · Sales / POS</h2>
+<p>Create customer invoices. Add line items (product, quantity, unit price) and the line totals,
+subtotal, discount, VAT and grand total calculate as you type. Track payment status and method.</p>
+
+<figure>
+<svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="250" fill="#0b1120"/>
+  <g font-family="sans-serif">
+    <text x="24" y="34" fill="#f1f5f9" font-size="14" font-weight="700">New Invoice</text>
+    <text x="24" y="58" fill="#94a3b8" font-size="9">LINE ITEMS</text>
+    <!-- line item rows -->
+    <rect x="24" y="66" width="350" height="26" rx="6" fill="#0b1120" stroke="#334155"/><text x="36" y="84" fill="#e2e8f0" font-size="10">Pinafore</text>
+    <rect x="384" y="66" width="70" height="26" rx="6" fill="#0b1120" stroke="#334155"/><text x="396" y="84" fill="#e2e8f0" font-size="10">200</text>
+    <rect x="464" y="66" width="90" height="26" rx="6" fill="#0b1120" stroke="#334155"/><text x="476" y="84" fill="#e2e8f0" font-size="10">3,900</text>
+    <text x="566" y="84" fill="#cbd5e1" font-size="10">₦780,000</text>
+    <rect x="24" y="98" width="350" height="26" rx="6" fill="#0b1120" stroke="#334155"/><text x="36" y="116" fill="#e2e8f0" font-size="10">Oxford Shirt</text>
+    <rect x="384" y="98" width="70" height="26" rx="6" fill="#0b1120" stroke="#334155"/><text x="396" y="116" fill="#e2e8f0" font-size="10">20</text>
+    <rect x="464" y="98" width="90" height="26" rx="6" fill="#0b1120" stroke="#334155"/><text x="476" y="116" fill="#e2e8f0" font-size="10">4,500</text>
+    <text x="566" y="116" fill="#cbd5e1" font-size="10">₦90,000</text>
+    <rect x="24" y="134" width="120" height="26" rx="7" fill="#0f172a" stroke="#1e293b"/><text x="84" y="151" fill="#60a5fa" font-size="10" text-anchor="middle">+ Add item</text>
+    <!-- totals panel -->
+    <rect x="600" y="58" width="256" height="170" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <g font-size="11">
+      <text x="620" y="86" fill="#94a3b8">Subtotal</text><text x="836" y="86" fill="#e2e8f0" text-anchor="end">₦870,000</text>
+      <text x="620" y="112" fill="#94a3b8">Discount (5%)</text><text x="836" y="112" fill="#e2e8f0" text-anchor="end">− ₦43,500</text>
+      <text x="620" y="138" fill="#94a3b8">VAT (7.5%)</text><text x="836" y="138" fill="#e2e8f0" text-anchor="end">₦61,988</text>
+      <line x1="620" y1="152" x2="836" y2="152" stroke="#1e293b"/>
+      <text x="620" y="180" fill="#f1f5f9" font-weight="700">Total</text><text x="836" y="180" fill="#60a5fa" font-size="15" font-weight="700" text-anchor="end">₦888,488</text>
+    </g>
+    <rect x="700" y="194" width="156" height="26" rx="7" fill="#3b82f6"/><text x="778" y="211" fill="#fff" font-size="11" font-weight="600" text-anchor="middle">Save invoice</text>
+  </g>
+</svg>
+<figcaption>The invoice editor: add line items on the left; subtotal, discount, VAT and total update live on the right. (Set VAT to 7.5% for Nigeria.)</figcaption>
+</figure>
+<ol class="steps">
+  <li>Click <b>+ New Invoice</b>.</li>
+  <li>Enter the customer and order type (wholesale / retail).</li>
+  <li>Add line items with <b>+ Add item</b>; set discount % and VAT %.</li>
+  <li>Record amount paid, payment method and status, then <b>Save invoice</b>.</li>
+</ol>
+<div class="callout warn"><b>VAT note</b> The VAT field defaults to 16%. Nigeria's standard VAT is 7.5% — change the VAT % on each invoice (or ask your administrator to set the correct default).</div>
+
+<!-- ============================ PEOPLE ============================ -->
+<h2 id="people">14 · Customers &amp; Suppliers</h2>
+<p><b>Customers</b> — wholesale and retail buyers, with contact details, credit limit and lifetime totals. Filter by type.</p>
+<p><b>Suppliers</b> — who you buy materials from, with contact person, materials supplied, payment terms and a 1–5 star rating. Filter by status.</p>
+<p style="color:var(--muted);font-size:14px"><i>Both use the same card-and-table layout as Workers; Suppliers shows a ★ star rating, Customers shows order and spend totals.</i></p>
+
+<!-- ============================ FINANCES ============================ -->
+<h2 id="finances">15 · Finances</h2>
+<p>Record expenses by category (raw materials, labour, utilities, maintenance, transport, rent, equipment, other),
+amount, date, payment method and who approved it. The page shows total spend, a monthly expense chart and your top category.</p>
+
+<figure>
+<svg viewBox="0 0 880 210" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="210" fill="#0b1120"/>
+  <g font-family="sans-serif">
+    <rect x="24" y="14" width="200" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="40" y="34" fill="#64748b" font-size="9">TOTAL SPEND</text><text x="40" y="56" fill="#f87171" font-size="18" font-weight="700">₦1.14m</text>
+    <rect x="236" y="14" width="190" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="252" y="34" fill="#64748b" font-size="9">ENTRIES</text><text x="252" y="56" fill="#f1f5f9" font-size="18" font-weight="700">5</text>
+    <rect x="438" y="14" width="190" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="454" y="34" fill="#64748b" font-size="9">CATEGORIES</text><text x="454" y="56" fill="#a78bfa" font-size="18" font-weight="700">5</text>
+    <rect x="640" y="14" width="216" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="656" y="34" fill="#64748b" font-size="9">TOP CATEGORY</text><text x="656" y="54" fill="#fbbf24" font-size="14" font-weight="700">Raw Materials</text>
+    <rect x="24" y="80" width="832" height="116" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <text x="44" y="102" fill="#cbd5e1" font-size="11">Monthly Expense Summary</text>
+    <g fill="#3b82f6">
+      <rect x="60" y="150" width="40" height="36"/><rect x="130" y="120" width="40" height="66"/><rect x="200" y="138" width="40" height="48"/>
+      <rect x="270" y="108" width="40" height="78"/><rect x="340" y="160" width="40" height="26"/><rect x="410" y="132" width="40" height="54"/>
+      <rect x="480" y="146" width="40" height="40"/><rect x="550" y="116" width="40" height="70"/><rect x="620" y="152" width="40" height="34"/>
+      <rect x="690" y="128" width="40" height="58"/><rect x="760" y="158" width="40" height="28"/>
+    </g>
+  </g>
+</svg>
+<figcaption>Finances — total spend, top category and a month-by-month expense bar chart.</figcaption>
+</figure>
+
+<!-- ============================ POWER ============================ -->
+<h2 id="power">16 · Power Outage log</h2>
+<p>Record every power interruption. Enter the date, the time power went <b>off</b> and came <b>back</b> —
+the <b>duration</b> (e.g. “3h 33m”) is worked out automatically. Cards show this month's outages, total hours lost and the longest outage. Filter by month and year.</p>
+
+<figure>
+<svg viewBox="0 0 880 200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="200" fill="#0b1120"/>
+  <g font-family="sans-serif">
+    <rect x="24" y="14" width="260" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="40" y="34" fill="#64748b" font-size="9">OUTAGES — JUNE</text><text x="40" y="56" fill="#fbbf24" font-size="19" font-weight="700">3</text>
+    <rect x="296" y="14" width="260" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="312" y="34" fill="#64748b" font-size="9">HOURS LOST</text><text x="312" y="56" fill="#f87171" font-size="19" font-weight="700">9.8h</text>
+    <rect x="568" y="14" width="288" height="52" rx="11" fill="#0f172a" stroke="#1e293b"/><text x="584" y="34" fill="#64748b" font-size="9">LONGEST OUTAGE</text><text x="584" y="56" fill="#a78bfa" font-size="19" font-weight="700">4.8h</text>
+    <!-- log form -->
+    <rect x="24" y="80" width="832" height="104" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <text x="44" y="104" fill="#94a3b8" font-size="9">DATE</text><rect x="44" y="110" width="150" height="28" rx="7" fill="#0b1120" stroke="#334155"/><text x="56" y="129" fill="#e2e8f0" font-size="10">2026-06-16</text>
+    <text x="214" y="104" fill="#94a3b8" font-size="9">POWER OFF</text><rect x="214" y="110" width="120" height="28" rx="7" fill="#0b1120" stroke="#334155"/><text x="226" y="129" fill="#e2e8f0" font-size="10">13:20</text>
+    <text x="354" y="104" fill="#94a3b8" font-size="9">POWER BACK</text><rect x="354" y="110" width="120" height="28" rx="7" fill="#0b1120" stroke="#334155"/><text x="366" y="129" fill="#e2e8f0" font-size="10">18:05</text>
+    <rect x="500" y="104" width="336" height="40" rx="9" fill="#0b1120" stroke="#1e293b"/><text x="516" y="121" fill="#64748b" font-size="9">CALCULATED DURATION</text><text x="836" y="130" fill="#fbbf24" font-size="15" font-weight="700" text-anchor="end" dx="-12">4h 45m</text>
+    <text x="44" y="168" fill="#64748b" font-size="9.5">The duration fills in automatically as you pick the off / back times.</text>
+  </g>
+</svg>
+<figcaption>Logging an outage: pick the date and the off / back times — the duration calculates itself.</figcaption>
+</figure>
+
+<!-- ============================ REPORTS ============================ -->
+<h2 id="reports">17 · Reports &amp; Director's View</h2>
+<p><b>Reports</b> brings production, attendance and expenses together as charts. Choose a <b>Year</b>, or set a
+<b>From/To</b> date range (which overrides the year), to focus the analysis.</p>
+<figure>
+<svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="240" fill="#0b1120"/>
+  <g font-family="sans-serif">
+    <!-- filter bar -->
+    <rect x="24" y="16" width="832" height="40" rx="10" fill="#0f172a" stroke="#1e293b"/>
+    <text x="40" y="34" fill="#64748b" font-size="9">YEAR</text><rect x="40" y="30" width="80" height="20" rx="6" fill="#0b1120" stroke="#334155"/><text x="52" y="44" fill="#e2e8f0" font-size="10">2026 ▾</text>
+    <text x="140" y="34" fill="#64748b" font-size="9">FROM</text><rect x="140" y="30" width="100" height="20" rx="6" fill="#0b1120" stroke="#334155"/>
+    <text x="256" y="34" fill="#64748b" font-size="9">TO</text><rect x="256" y="30" width="100" height="20" rx="6" fill="#0b1120" stroke="#334155"/>
+    <!-- bar chart -->
+    <rect x="24" y="68" width="404" height="156" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <text x="44" y="90" fill="#cbd5e1" font-size="11">Production Trend</text>
+    <g fill="#3b82f6">
+      <rect x="48" y="170" width="26" height="40"/><rect x="86" y="150" width="26" height="60"/><rect x="124" y="130" width="26" height="80"/>
+      <rect x="162" y="158" width="26" height="52"/><rect x="200" y="120" width="26" height="90"/><rect x="238" y="140" width="26" height="70"/>
+      <rect x="276" y="164" width="26" height="46"/><rect x="314" y="134" width="26" height="76"/><rect x="352" y="148" width="26" height="62"/>
+    </g>
+    <!-- pie -->
+    <rect x="452" y="68" width="404" height="156" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <text x="472" y="90" fill="#cbd5e1" font-size="11">Expense Breakdown</text>
+    <circle cx="560" cy="150" r="44" fill="none" stroke="#3b82f6" stroke-width="22" stroke-dasharray="120 156"/>
+    <circle cx="560" cy="150" r="44" fill="none" stroke="#10b981" stroke-width="22" stroke-dasharray="70 206" stroke-dashoffset="-120"/>
+    <circle cx="560" cy="150" r="44" fill="none" stroke="#f59e0b" stroke-width="22" stroke-dasharray="46 230" stroke-dashoffset="-190"/>
+    <g font-size="10" fill="#cbd5e1">
+      <rect x="660" y="120" width="10" height="10" fill="#3b82f6"/><text x="678" y="129">Raw materials</text>
+      <rect x="660" y="140" width="10" height="10" fill="#10b981"/><text x="678" y="149">Labour</text>
+      <rect x="660" y="160" width="10" height="10" fill="#f59e0b"/><text x="678" y="169">Utilities</text>
+    </g>
+  </g>
+</svg>
+<figcaption>Reports: pick a year (or a From/To range) and the charts update — production trend, attendance rate, and expense breakdown.</figcaption>
+</figure>
+
+<p><b>Director's View</b> is a read-only executive summary — production efficiency, attendance rate, orders
+completed, power hours lost, efficiency by department, top-performing teams and a team league table. Available to Directors and administrators.</p>
+
+<!-- ============================ IMPORT ============================ -->
+<h2 id="import">18 · Import Center (CSV)</h2>
+
+<figure>
+<svg viewBox="0 0 880 210" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="210" fill="#0b1120"/>
+  <g font-family="sans-serif">
+    <rect x="24" y="24" width="260" height="160" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <rect x="44" y="44" width="36" height="36" rx="10" fill="#3b82f6" opacity="0.18"/><text x="62" y="68" fill="#60a5fa" font-size="16" text-anchor="middle">🗄</text>
+    <text x="92" y="58" fill="#f1f5f9" font-size="13" font-weight="700">Workers</text>
+    <text x="92" y="74" fill="#64748b" font-size="10">10 columns</text>
+    <rect x="44" y="98" width="100" height="32" rx="8" fill="#1e293b"/><text x="94" y="119" fill="#cbd5e1" font-size="11" text-anchor="middle">⬇ Template</text>
+    <rect x="156" y="98" width="108" height="32" rx="8" fill="#3b82f6"/><text x="210" y="119" fill="#fff" font-size="11" text-anchor="middle">⬆ Upload CSV</text>
+    <rect x="44" y="142" width="220" height="26" rx="7" fill="#052e1a" stroke="#14532d"/><text x="56" y="159" fill="#4ade80" font-size="11">✓ 200 imported · 43 duplicates</text>
+
+    <rect x="304" y="24" width="260" height="160" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <text x="372" y="58" fill="#f1f5f9" font-size="13" font-weight="700">Attendance</text>
+    <text x="372" y="74" fill="#64748b" font-size="10">9 columns</text>
+    <rect x="324" y="44" width="36" height="36" rx="10" fill="#3b82f6" opacity="0.18"/><text x="342" y="68" fill="#60a5fa" font-size="16" text-anchor="middle">🗄</text>
+    <rect x="324" y="98" width="100" height="32" rx="8" fill="#1e293b"/><text x="374" y="119" fill="#cbd5e1" font-size="11" text-anchor="middle">⬇ Template</text>
+    <rect x="436" y="98" width="108" height="32" rx="8" fill="#3b82f6"/><text x="490" y="119" fill="#fff" font-size="11" text-anchor="middle">⬆ Upload CSV</text>
+
+    <rect x="584" y="24" width="272" height="160" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <text x="652" y="58" fill="#f1f5f9" font-size="13" font-weight="700">Power Outage</text>
+    <text x="652" y="74" fill="#64748b" font-size="10">8 columns</text>
+    <rect x="604" y="44" width="36" height="36" rx="10" fill="#3b82f6" opacity="0.18"/><text x="622" y="68" fill="#60a5fa" font-size="16" text-anchor="middle">🗄</text>
+    <rect x="604" y="98" width="100" height="32" rx="8" fill="#1e293b"/><text x="654" y="119" fill="#cbd5e1" font-size="11" text-anchor="middle">⬇ Template</text>
+    <rect x="716" y="98" width="120" height="32" rx="8" fill="#3b82f6"/><text x="776" y="119" fill="#fff" font-size="11" text-anchor="middle">⬆ Upload CSV</text>
+  </g>
+</svg>
+<figcaption>The Import Center (administrators only): one card per data type. Download a template, fill it in, upload it.</figcaption>
+</figure>
+
+<p>The Import Center (admin only) lets you bulk-add records from a spreadsheet.</p>
+<ol class="steps">
+  <li>Find the card for the data you want (Workers, Attendance, Power Outage, etc.).</li>
+  <li>Click <b>Template</b> to download a blank CSV with the exact column headings.</li>
+  <li>Fill it in (in Excel / Google Sheets) and save as CSV — <b>keep the headings exactly as they are</b>.</li>
+  <li>Click <b>Upload CSV</b> and choose your file. A progress bar runs, then a summary shows.</li>
+</ol>
+<p>The summary reports four numbers: <b>Found</b>, <b>Imported</b>, <b>Duplicates</b> (ignored) and <b>Skipped</b> (rows with errors, each listed with its line number).</p>
+<div class="callout note"><b>Safe to re-upload</b> Duplicates are detected and ignored, so uploading the same file twice won't double your data. For example, a Worker is a duplicate if its <code>employee_id</code> already exists; an invoice by <code>invoice_number</code>; attendance by worker + date + shift.</div>
+
+<!-- ============================ USERS ============================ -->
+<h2 id="users">19 · Users &amp; Roles</h2>
+<p>Administrators manage who can do what here. It lists every user with their email, join date and current role.
+Use the dropdown to change someone's role; a guide at the bottom shows exactly which pages each role can see.</p>
+
+<figure>
+<svg viewBox="0 0 880 180" xmlns="http://www.w3.org/2000/svg">
+  <rect width="880" height="180" fill="#0b1120"/>
+  <g font-family="sans-serif">
+    <rect x="24" y="16" width="832" height="148" rx="12" fill="#0f172a" stroke="#1e293b"/>
+    <g font-size="9.5" fill="#64748b"><text x="44" y="40">USER</text><text x="240" y="40">EMAIL</text><text x="470" y="40">CURRENT ROLE</text><text x="640" y="40">CHANGE ROLE</text></g>
+    <line x1="44" y1="48" x2="836" y2="48" stroke="#1e293b"/>
+    <g font-size="11" fill="#cbd5e1">
+      <text x="44" y="74">Jane Doe <tspan fill="#64748b" font-size="9">(you)</tspan></text><text x="240" y="74" fill="#94a3b8">jane@factory.ng</text>
+      <rect x="470" y="63" width="92" height="17" rx="8" fill="#1e3a8a"/><text x="516" y="75" fill="#93c5fd" font-size="9" text-anchor="middle">Administrator</text>
+      <rect x="640" y="60" width="150" height="24" rx="7" fill="#0b1120" stroke="#1e293b"/><text x="652" y="76" fill="#475569" font-size="10">Administrator ▾</text>
+      <text x="44" y="108">Emeka Obi</text><text x="240" y="108" fill="#94a3b8">emeka@factory.ng</text>
+      <rect x="470" y="97" width="80" height="17" rx="8" fill="#1e3a8a"/><text x="510" y="109" fill="#93c5fd" font-size="9" text-anchor="middle">Supervisor</text>
+      <rect x="640" y="94" width="150" height="24" rx="7" fill="#0b1120" stroke="#334155"/><text x="652" y="110" fill="#e2e8f0" font-size="10">Supervisor ▾</text>
+      <text x="44" y="142">Ngozi Eze</text><text x="240" y="142" fill="#94a3b8">ngozi@factory.ng</text>
+      <rect x="470" y="131" width="86" height="17" rx="8" fill="#1e3a8a"/><text x="513" y="143" fill="#93c5fd" font-size="9" text-anchor="middle">Office Admin</text>
+      <rect x="640" y="128" width="150" height="24" rx="7" fill="#0b1120" stroke="#334155"/><text x="652" y="144" fill="#e2e8f0" font-size="10">Office Admin ▾</text>
+    </g>
+  </g>
+</svg>
+<figcaption>Users &amp; Roles: change anyone's role from the dropdown. Your own row is locked so you can't lock yourself out.</figcaption>
+</figure>
+<div class="callout tip"><b>Two safeguards</b> You can't change your own role (so you can't accidentally lock yourself out), and only administrators can change roles.</div>
+
+<!-- ============================ WORKFLOWS ============================ -->
+<h2 id="workflows">20 · Everyday workflows</h2>
+
+<h4>Start-of-day (Office Admin)</h4>
+<ol class="steps">
+  <li>Open <b>Attendance</b>, confirm today's date.</li>
+  <li>Search each worker as they clock in; set times and status; save.</li>
+  <li>Check the Present / Absent / Late cards match the floor.</li>
+</ol>
+
+<h4>End-of-week production review (Supervisor)</h4>
+<ol class="steps">
+  <li>Open <b>Weekly Tracker</b>, make sure each department's entries are in for the week.</li>
+  <li>Check the efficiency column and week totals.</li>
+  <li>Click <b>Export PDF</b> for the records or a management meeting.</li>
+</ol>
+
+<h4>Receiving fabric (Storekeeper)</h4>
+<ol class="steps">
+  <li>Add or update the fabric in <b>Raw Materials</b> (quantity, batch, supplier).</li>
+  <li>Log a <b>Stock Movement</b> of type <i>stock in</i> as your paper trail.</li>
+</ol>
+
+<h4>Selling to a customer (Sales)</h4>
+<ol class="steps">
+  <li><b>Sales / POS → + New Invoice</b>; add the customer and line items.</li>
+  <li>Set discount and the correct VAT %; record the payment.</li>
+  <li>Save. Track outstanding balances with the Payment filter.</li>
+</ol>
+
+<!-- ============================ FAQ ============================ -->
+<h2 id="faq">21 · Frequently asked questions</h2>
+
+<details><summary>I forgot my password — what do I do?</summary>
+<div class="body">Ask your administrator to help reset it from your Supabase account, or use the password-reset option if it has been enabled. There is no separate password screen inside GarmentHub itself.</div></details>
+
+<details><summary>Why can't I see some menu items my colleague has?</summary>
+<div class="body">The menu is filtered by your role. For example, a Storekeeper sees inventory pages but not Finances. If you genuinely need access to more, ask an administrator to adjust your role on the Users &amp; Roles page.</div></details>
+
+<details><summary>There's no “Mark attendance” button.</summary>
+<div class="body">It only appears after you select a worker from the search box. If you can't select anyone, the Workers list is empty — add workers first (or import them via the Import Center).</div></details>
+
+<details><summary>I marked the same worker twice by mistake.</summary>
+<div class="body">You can't, really — if a worker already has a record for that date and shift, the form switches to <b>edit mode</b> and updates the existing entry instead of adding a second one.</div></details>
+
+<details><summary>My imported records appear in a strange order.</summary>
+<div class="body">Lists are sorted newest-first by the record's own date (e.g. attendance date, invoice date), not by when you uploaded them. So the most recent dates appear at the top regardless of import time.</div></details>
+
+<details><summary>I uploaded a CSV but some rows were skipped.</summary>
+<div class="body">Open the “rows skipped or ignored” section in the import summary. Each skipped row is listed with its line number and reason — usually a missing required field (like a worker's name) or a value the database rejected. <b>Duplicates</b> are listed separately and are ignored on purpose.</div></details>
+
+<details><summary>Can I re-upload the same spreadsheet without doubling my data?</summary>
+<div class="body">Yes. Duplicate detection means already-existing rows are ignored. The summary will show them under “Duplicates”.</div></details>
+
+<details><summary>Why didn't my stock go down after a sale?</summary>
+<div class="body">In this version, Sales and Stock Movements are records/logs — they don't automatically change Raw Material or Finished Product quantities. Update those quantities directly when needed. (The Bin Book is the exception: issuing a consumable does reduce its stock automatically.)</div></details>
+
+<details><summary>The VAT looks too high.</summary>
+<div class="body">The default VAT is 16%. Nigeria's standard rate is 7.5%. Change the VAT % on the invoice before saving, or ask your administrator to set the correct default.</div></details>
+
+<details><summary>How do I filter to a specific period?</summary>
+<div class="body">Most list pages have a <b>year</b> dropdown and a <b>From / To</b> date filter. Set From/To for an exact range (it overrides the year). The Reports and Power Outage pages have their own period controls.</div></details>
+
+<details><summary>How do I export a report to share?</summary>
+<div class="body">The Weekly Tracker has an <b>Export PDF</b> button that produces a printable, month-by-month report for the whole year. For other pages, use your browser's print (<span class="kbd">Cmd/Ctrl + P</span>) and “Save as PDF”.</div></details>
+
+<details><summary>Does it work on a phone?</summary>
+<div class="body">Yes. The layout adapts to small screens — tap the <b>☰</b> menu icon at the top to open the sidebar.</div></details>
+
+<details><summary>Is my data saved automatically?</summary>
+<div class="body">Data is saved to the secure Supabase database the moment you click Save. There's nothing extra to “save” at the end of the day.</div></details>
+
+<p style="margin-top:40px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px">
+GarmentHub — Factory ERP · User Manual v1.0 · Enugu Fashion &amp; Garment Hub.
+For technical help (resets, roles, deployment) contact your system administrator.
+</p>
+
+</div>
+</body>
+</html>
