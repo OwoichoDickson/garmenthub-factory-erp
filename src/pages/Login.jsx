@@ -131,6 +131,10 @@ export default function Login() {
             </p>
           )}
         </form>
+
+        <p className="mt-5 text-center text-[11px] text-slate-600">
+          Powered by <span className="font-semibold text-slate-500">Vantix Innovations</span>&trade;
+        </p>
       </div>
     </div>
   )

@@ -119,6 +119,9 @@ export default function Sidebar({ onNavigate }) {
             <LogOut size={16} />
           </button>
         </div>
+        <p className="mt-2.5 text-center text-[10px] text-slate-600">
+          Powered by <span className="font-semibold text-slate-500">Vantix Innovations</span>&trade;
+        </p>
       </div>
     </aside>
   )
