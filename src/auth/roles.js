@@ -73,3 +73,23 @@ export function homePathForRole(role) {
   const first = navForRole(role)[0]
   return first ? first.path : '/'
 }
+
+// ---- Multi-role helpers (access is the union of all assigned roles) ----
+const asArray = (roles) => (Array.isArray(roles) ? roles : roles ? [roles] : [])
+
+export function canAccessAny(roles, key) {
+  return asArray(roles).some((r) => canAccess(r, key))
+}
+
+export function isFullAccess(roles) {
+  return asArray(roles).some((r) => FULL_ACCESS_ROLES.includes(r))
+}
+
+export function navForRoles(roles) {
+  return NAV.filter((item) => canAccessAny(roles, item.key))
+}
+
+export function homePathForRoles(roles) {
+  const first = navForRoles(roles)[0]
+  return first ? first.path : '/'
+}

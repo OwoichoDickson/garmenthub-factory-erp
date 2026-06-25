@@ -51,6 +51,8 @@ export function AuthProvider({ children }) {
     user: session?.user ?? null,
     profile,
     role: profile?.role ?? null,
+    // All assigned roles (multi-role). Falls back to the single role for old rows.
+    roles: profile?.roles?.length ? profile.roles : profile?.role ? [profile.role] : [],
     loading,
     refreshProfile: () => loadProfile(session?.user?.id),
     signIn: (email, password) => supabase.auth.signInWithPassword({ email, password }),

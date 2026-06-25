@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
 import { isSupabaseConfigured } from './lib/supabase'
 import { AuthProvider, useAuth } from './auth/AuthContext'
-import { canAccess, homePathForRole } from './auth/roles'
+import { canAccessAny, homePathForRoles } from './auth/roles'
 
 import ConfigNotice from './components/ConfigNotice'
 import Layout from './components/Layout'
@@ -39,15 +39,15 @@ function Spinner() {
 
 // Route-level access guard.
 function Guard({ pageKey, children }) {
-  const { role } = useAuth()
-  return canAccess(role, pageKey) ? children : <AccessDenied />
+  const { roles } = useAuth()
+  return canAccessAny(roles, pageKey) ? children : <AccessDenied />
 }
 
 // Index route: dashboard for those who can see it, else their first allowed page.
 function RoleHome() {
-  const { role } = useAuth()
-  if (canAccess(role, 'dashboard')) return <Dashboard />
-  return <Navigate to={homePathForRole(role)} replace />
+  const { roles } = useAuth()
+  if (canAccessAny(roles, 'dashboard')) return <Dashboard />
+  return <Navigate to={homePathForRoles(roles)} replace />
 }
 
 const ROUTES = [

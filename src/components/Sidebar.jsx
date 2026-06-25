@@ -6,7 +6,7 @@ import {
   Truck, Wallet, Zap, BarChart3, ShieldCheck, ChevronDown, LogOut, Scissors, Upload,
 } from 'lucide-react'
 import { useAuth } from '../auth/AuthContext'
-import { navForRole, ROLE_LABELS } from '../auth/roles'
+import { navForRoles, ROLE_LABELS } from '../auth/roles'
 import ShiftIndicator from './ShiftIndicator'
 
 const ICONS = {
@@ -29,8 +29,9 @@ function groupBy(items) {
 }
 
 export default function Sidebar({ onNavigate }) {
-  const { profile, role, signOut } = useAuth()
-  const groups = groupBy(navForRole(role))
+  const { profile, roles, signOut } = useAuth()
+  const groups = groupBy(navForRoles(roles))
+  const roleLabel = roles.length ? roles.map((r) => ROLE_LABELS[r] || r).join(', ') : '—'
   const [collapsed, setCollapsed] = useState({})
   const toggle = (g) => setCollapsed((c) => ({ ...c, [g]: !c[g] }))
 
@@ -109,7 +110,7 @@ export default function Sidebar({ onNavigate }) {
             <p className="truncate text-sm font-medium text-slate-200">
               {profile?.full_name || profile?.email || 'User'}
             </p>
-            <p className="truncate text-[11px] text-slate-500">{ROLE_LABELS[role] || role}</p>
+            <p className="truncate text-[11px] text-slate-500" title={roleLabel}>{roleLabel}</p>
           </div>
           <button
             onClick={signOut}

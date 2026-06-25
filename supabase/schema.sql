@@ -25,6 +25,7 @@ create table if not exists public.profiles (
   role        text not null default 'office_admin'
               check (role in ('admin','factory_admin','manager','director',
                               'supervisor','office_admin','storekeeper','floor_assistant')),
+  roles       text[] not null default '{office_admin}',  -- source of truth (multi-role)
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
 );
@@ -40,7 +41,7 @@ set search_path = public as $$
   select exists (
     select 1 from public.profiles
     where id = auth.uid()
-      and role in ('admin','factory_admin','manager')
+      and roles && array['admin','factory_admin','manager']
   );
 $$;
 
@@ -50,9 +51,11 @@ returns trigger language plpgsql security definer
 set search_path = public as $$
 declare
   user_count int;
+  first_role text;
 begin
   select count(*) into user_count from public.profiles;
-  insert into public.profiles (id, email, full_name, role)
+  first_role := case when user_count = 0 then 'admin' else 'office_admin' end;
+  insert into public.profiles (id, email, full_name, role, roles)
   values (
     new.id,
     new.email,
@@ -62,7 +65,8 @@ begin
       new.raw_user_meta_data->>'name',
       split_part(new.email, '@', 1)
     ),
-    case when user_count = 0 then 'admin' else 'office_admin' end
+    first_role,
+    array[first_role]
   );
   return new;
 end $$;
@@ -366,9 +370,18 @@ create or replace function public.guard_role_change()
 returns trigger language plpgsql security definer
 set search_path = public as $$
 begin
-  if new.role is distinct from old.role and not public.is_admin() then
-    new.role := old.role;  -- silently keep old role for non-admins
+  -- Non-admins cannot change role/roles at all.
+  if (new.role is distinct from old.role or new.roles is distinct from old.roles)
+     and not public.is_admin() then
+    new.role := old.role;
+    new.roles := old.roles;
+    return new;
   end if;
+  -- Never allow an empty roles array; mirror role <-> roles[1].
+  if new.roles is null or array_length(new.roles, 1) is null then
+    new.roles := array[coalesce(new.role, 'office_admin')];
+  end if;
+  new.role := new.roles[1];
   return new;
 end $$;
 

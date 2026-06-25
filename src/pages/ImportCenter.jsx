@@ -5,7 +5,7 @@ import {
 import PageHeader from '../components/PageHeader'
 import AccessDenied from '../components/AccessDenied'
 import { useAuth } from '../auth/AuthContext'
-import { FULL_ACCESS_ROLES } from '../auth/roles'
+import { isFullAccess } from '../auth/roles'
 import { IMPORT_ENTITIES, coerce, DEDUPE, rowKey } from '../api/importEntities'
 import { table } from '../api/db'
 import { parseCSV, downloadCSV } from '../lib/csv'
@@ -189,8 +189,8 @@ function Stat({ label, value, tone = 'text-slate-300' }) {
 }
 
 export default function ImportCenter() {
-  const { role } = useAuth()
-  if (!FULL_ACCESS_ROLES.includes(role)) {
+  const { roles } = useAuth()
+  if (!isFullAccess(roles)) {
     return <AccessDenied message="The Import Center is restricted to administrators." />
   }
 
