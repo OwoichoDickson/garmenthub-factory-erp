@@ -4,6 +4,7 @@ import {
   LayoutDashboard, Eye, Factory, CalendarRange, Timer, Package, Shirt,
   ArrowLeftRight, BookOpen, Users, CalendarCheck, ShoppingCart, UserSquare,
   Truck, Wallet, Zap, BarChart3, ShieldCheck, ChevronDown, LogOut, Scissors, Upload,
+  ClipboardList,
 } from 'lucide-react'
 import { useAuth } from '../auth/AuthContext'
 import { navForRoles, ROLE_LABELS } from '../auth/roles'
@@ -12,7 +13,7 @@ import ShiftIndicator from './ShiftIndicator'
 const ICONS = {
   LayoutDashboard, Eye, Factory, CalendarRange, Timer, Package, Shirt,
   ArrowLeftRight, BookOpen, Users, CalendarCheck, ShoppingCart, UserSquare,
-  Truck, Wallet, Zap, BarChart3, ShieldCheck, Upload,
+  Truck, Wallet, Zap, BarChart3, ShieldCheck, Upload, ClipboardList,
 }
 
 function groupBy(items) {

@@ -22,6 +22,7 @@ export const NAV = [
   { key: 'director', path: '/DirectorDashboard', label: "Director's View", icon: 'Eye', group: 'Overview' },
 
   { key: 'production', path: '/Production', label: 'Production', icon: 'Factory', group: 'Production' },
+  { key: 'daily', path: '/DailyProduction', label: 'Daily Production', icon: 'ClipboardList', group: 'Production' },
   { key: 'weekly', path: '/WeeklyTracker', label: 'Weekly Tracker', icon: 'CalendarRange', group: 'Production' },
   { key: 'hourly', path: '/HourlyTracker', label: 'Hourly Tracker', icon: 'Timer', group: 'Production' },
 
@@ -51,10 +52,10 @@ const ACCESS = {
   factory_admin: '*',
   manager: '*',
   director: ['director'],
-  supervisor: ['production', 'weekly'],
+  supervisor: ['production', 'daily', 'weekly'],
   office_admin: ['workers', 'attendance', 'power'],
-  storekeeper: ['raw', 'finished', 'movements', 'suppliers', 'power', 'bin'],
-  floor_assistant: ['weekly', 'hourly'],
+  storekeeper: ['raw', 'finished', 'movements', 'suppliers', 'power', 'bin', 'daily'],
+  floor_assistant: ['daily', 'weekly', 'hourly'],
 }
 
 export function canAccess(role, key) {

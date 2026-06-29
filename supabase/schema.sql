@@ -178,6 +178,17 @@ create table if not exists public.production_orders (
   updated_at       timestamptz not null default now()
 );
 
+create table if not exists public.daily_production (
+  id                        uuid primary key default gen_random_uuid(),
+  date                      date not null default current_date,
+  uniforms_ready_pickup     int  default 0,
+  uniforms_awaiting_badges  int  default 0,
+  badges_produced           int  default 0,
+  notes                     text,
+  created_at                timestamptz not null default now(),
+  updated_at                timestamptz not null default now()
+);
+
 create table if not exists public.raw_materials (
   id                  uuid primary key default gen_random_uuid(),
   fabric_type         text not null,
@@ -323,7 +334,7 @@ begin
   foreach t in array array[
     'workers','attendance','power_outages','weekly_production_entries','hourly_progress',
     'production_orders','raw_materials','finished_products','stock_movements','sales_orders',
-    'customers','suppliers','expenses','bin_items','bin_entries'
+    'customers','suppliers','expenses','bin_items','bin_entries','daily_production'
   ] loop
     execute format('drop trigger if exists trg_%1$s_updated on public.%1$s;', t);
     execute format('create trigger trg_%1$s_updated before update on public.%1$s
@@ -343,7 +354,7 @@ begin
   foreach t in array array[
     'workers','attendance','power_outages','weekly_production_entries','hourly_progress',
     'production_orders','raw_materials','finished_products','stock_movements','sales_orders',
-    'customers','suppliers','expenses','bin_items','bin_entries'
+    'customers','suppliers','expenses','bin_items','bin_entries','daily_production'
   ] loop
     execute format('alter table public.%I enable row level security;', t);
     execute format('drop policy if exists "auth_all" on public.%I;', t);

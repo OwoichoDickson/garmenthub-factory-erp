@@ -12,6 +12,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import DirectorDashboard from './pages/DirectorDashboard'
 import Production from './pages/Production'
+import DailyProduction from './pages/DailyProduction'
 import WeeklyTracker from './pages/WeeklyTracker'
 import HourlyTracker from './pages/HourlyTracker'
 import RawMaterials from './pages/RawMaterials'
@@ -53,6 +54,7 @@ function RoleHome() {
 const ROUTES = [
   { path: '/DirectorDashboard', key: 'director', el: <DirectorDashboard /> },
   { path: '/Production', key: 'production', el: <Production /> },
+  { path: '/DailyProduction', key: 'daily', el: <DailyProduction /> },
   { path: '/WeeklyTracker', key: 'weekly', el: <WeeklyTracker /> },
   { path: '/HourlyTracker', key: 'hourly', el: <HourlyTracker /> },
   { path: '/RawMaterials', key: 'raw', el: <RawMaterials /> },

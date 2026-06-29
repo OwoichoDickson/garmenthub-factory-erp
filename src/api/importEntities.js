@@ -32,6 +32,13 @@ export const IMPORT_ENTITIES = [
     ],
   },
   {
+    key: 'daily_production', table: 'daily_production', label: 'Daily Production', required: [],
+    fields: [
+      f('date', 'date'), f('uniforms_ready_pickup', 'number'), f('uniforms_awaiting_badges', 'number'),
+      f('badges_produced', 'number'), f('notes'),
+    ],
+  },
+  {
     key: 'power_outages', table: 'power_outages', label: 'Power Outage', required: [],
     fields: [
       f('date'), f('month'), f('year', 'number'), f('power_off'), f('power_back'),
@@ -132,6 +139,7 @@ export const DEDUPE = {
   workers: ['employee_id'],
   attendance: ['worker_name', 'date', 'shift'],
   weekly_production_entries: ['date', 'department', 'team_or_worker_name', 'product_type'],
+  daily_production: ['date'],
   power_outages: ['date', 'year', 'power_off'],
   hourly_progress: ['worker_name', 'date', 'hour'],
   production_orders: ['order_number'],
