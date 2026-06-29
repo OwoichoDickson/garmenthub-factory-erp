@@ -6,13 +6,14 @@ import {
 import {
   Eye, Gauge, UserCheck, Trophy, ZapOff, Wallet, TrendingUp, Receipt, Boxes,
   AlertTriangle, PackageX, Clock4, Percent, ShieldAlert, Users, Timer,
-  Banknote, CheckCircle2,
+  Banknote, CheckCircle2, PackageCheck, Truck, Hourglass, BadgeCheck,
 } from 'lucide-react'
 import PageHeader from '../components/PageHeader'
 import KPICard from '../components/KPICard'
 import { ChartCard, ChartTip } from '../components/ChartCard'
 import { useCollection } from '../hooks/useCollection'
 import { titleCase, num, naira } from '../lib/format'
+import { dailyTotals, inYear } from '../lib/dailyProd'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4', '#ec4899', '#84cc16']
@@ -34,6 +35,9 @@ export default function DirectorDashboard() {
   const materials = useCollection('raw_materials')
   const finished = useCollection('finished_products')
   const workers = useCollection('workers')
+  const daily = useCollection('daily_production')
+
+  const dm = useMemo(() => dailyTotals(inYear(daily.rows, year)), [daily.rows]) // eslint-disable-line
 
   // ---------------- Financial ----------------
   const fin = useMemo(() => {
@@ -243,6 +247,15 @@ export default function DirectorDashboard() {
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
+      </div>
+
+      {/* ---------- Uniform & badge production ---------- */}
+      <SectionTitle>Uniform &amp; Badge Production</SectionTitle>
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <KPICard label="Outstanding for Pickup" value={num(dm.outstanding)} hint={`${num(dm.ready)} ready − ${num(dm.carriedOut)} out`} icon={PackageCheck} theme="green" />
+        <KPICard label="Carried Out" value={num(dm.carriedOut)} hint="collected / dispatched" icon={Truck} theme="blue" />
+        <KPICard label="Awaiting Badges" value={num(dm.awaitingLatest)} hint="latest count" icon={Hourglass} theme="amber" />
+        <KPICard label="Badges Produced" value={num(dm.badges)} hint={`${num(dm.badgesToday)} today`} icon={BadgeCheck} theme="violet" />
       </div>
 
       {/* ---------- Workforce ---------- */}

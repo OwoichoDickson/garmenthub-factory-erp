@@ -119,7 +119,8 @@ export const entities = {
     searchKeys: ['notes'],
     columns: [
       { key: 'date', label: 'Date', type: 'date' },
-      { key: 'uniforms_ready_pickup', label: 'Ready for Pickup', type: 'number' },
+      { key: 'uniforms_ready_pickup', label: 'Ready', type: 'number' },
+      { key: 'uniforms_carried_out', label: 'Carried Out', type: 'number' },
       { key: 'uniforms_awaiting_badges', label: 'Awaiting Badges', type: 'number' },
       { key: 'badges_produced', label: 'Badges Produced', type: 'number' },
       { key: 'notes', label: 'Notes', type: 'text' },
@@ -127,6 +128,7 @@ export const entities = {
     fields: [
       { name: 'date', label: 'Date', type: 'date', required: true },
       { name: 'uniforms_ready_pickup', label: 'Uniforms ready for pickup', type: 'number', default: 0 },
+      { name: 'uniforms_carried_out', label: 'Uniforms carried out (collected)', type: 'number', default: 0 },
       { name: 'uniforms_awaiting_badges', label: 'Uniforms awaiting badges', type: 'number', default: 0 },
       { name: 'badges_produced', label: 'Badges produced', type: 'number', default: 0 },
       { name: 'notes', label: 'Notes', type: 'textarea' },

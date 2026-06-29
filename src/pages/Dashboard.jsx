@@ -4,7 +4,7 @@ import {
 } from 'recharts'
 import {
   Users, CalendarCheck, Factory, AlertTriangle, Activity,
-  PackageCheck, Hourglass, BadgeCheck,
+  PackageCheck, Truck, Hourglass, BadgeCheck,
 } from 'lucide-react'
 import PageHeader from '../components/PageHeader'
 import KPICard from '../components/KPICard'
@@ -12,6 +12,7 @@ import { ChartCard, ChartTip } from '../components/ChartCard'
 import { useCollection } from '../hooks/useCollection'
 import { useAuth } from '../auth/AuthContext'
 import { currentShift, SHIFTS, titleCase, fmtDate } from '../lib/format'
+import { dailyTotals, inYear } from '../lib/dailyProd'
 
 const today = () => new Date().toISOString().slice(0, 10)
 
@@ -30,19 +31,11 @@ export default function Dashboard() {
   const activeOrders = orders.rows.filter((r) => r.status === 'in_progress' || r.status === 'pending').length
   const lowStock = materials.rows.filter((r) => Number(r.quantity) <= Number(r.reorder_level)).length
 
-  // Daily uniform & badge production — latest queue state + today's badges
-  const dailyMetrics = useMemo(() => {
-    const sorted = [...daily.rows].sort((a, b) => new Date(b.date) - new Date(a.date))
-    const latest = sorted[0]
-    const badgesToday = daily.rows
-      .filter((r) => r.date === today())
-      .reduce((s, r) => s + Number(r.badges_produced || 0), 0)
-    return {
-      readyPickup: Number(latest?.uniforms_ready_pickup || 0),
-      awaitingBadges: Number(latest?.uniforms_awaiting_badges || 0),
-      badgesToday,
-    }
-  }, [daily.rows])
+  // Daily uniform & badge production — current-period running balance
+  const dm = useMemo(
+    () => dailyTotals(inYear(daily.rows, new Date().getFullYear())),
+    [daily.rows],
+  )
 
   // Attendance trend — last 7 days present count
   const trend = useMemo(() => {
@@ -93,12 +86,13 @@ export default function Dashboard() {
         <KPICard label="Low Stock Materials" value={lowStock} icon={AlertTriangle} theme="amber" />
       </div>
 
-      {/* Uniform & badge production (daily) */}
-      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Uniform &amp; Badge Production</h2>
-      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <KPICard label="Uniforms Ready for Pickup" value={dailyMetrics.readyPickup} icon={PackageCheck} theme="green" hint="latest count" />
-        <KPICard label="Uniforms Awaiting Badges" value={dailyMetrics.awaitingBadges} icon={Hourglass} theme="amber" hint="latest count" />
-        <KPICard label="Badges Produced Today" value={dailyMetrics.badgesToday} icon={BadgeCheck} theme="blue" />
+      {/* Uniform & badge production (daily, current period) */}
+      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-400">Uniform &amp; Badge Production — this period</h2>
+      <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <KPICard label="Outstanding for Pickup" value={dm.outstanding} icon={PackageCheck} theme="green" hint={`${dm.ready} ready − ${dm.carriedOut} out`} />
+        <KPICard label="Carried Out" value={dm.carriedOut} icon={Truck} theme="blue" hint="collected / dispatched" />
+        <KPICard label="Awaiting Badges" value={dm.awaitingLatest} icon={Hourglass} theme="amber" hint="latest count" />
+        <KPICard label="Badges Produced Today" value={dm.badgesToday} icon={BadgeCheck} theme="violet" />
       </div>
 
       <div className="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
