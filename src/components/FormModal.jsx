@@ -1,19 +1,37 @@
 import { useEffect, useMemo, useState } from 'react'
 import Modal from './Modal'
 import { titleCase } from '../lib/format'
+import { table } from '../api/db'
 
-function Field({ field, value, onChange }) {
+function Field({ field, value, onChange, dynamicOptions }) {
   const common = 'input'
   switch (field.type) {
-    case 'select':
+    case 'select': {
+      // Options can be a static list, or loaded from another table (optionsTable).
+      let opts = field.options
+      if (field.optionsTable) {
+        const rows = dynamicOptions[field.optionsTable] || []
+        opts = rows
+          .map((r) => ({
+            value: r[field.optionValue],
+            label: Array.isArray(field.optionLabel)
+              ? field.optionLabel.map((k) => r[k]).filter(Boolean).join(' · ')
+              : r[field.optionLabel],
+          }))
+          .filter((o) => o.value != null && o.value !== '')
+      }
+      const isObj = field.optionsTable
       return (
         <select className={common} value={value ?? ''} onChange={(e) => onChange(e.target.value)}>
           <option value="">Select…</option>
-          {field.options.map((o) => (
-            <option key={o} value={o}>{titleCase(o)}</option>
-          ))}
+          {opts.map((o) =>
+            isObj
+              ? <option key={o.value} value={o.value}>{o.label || o.value}</option>
+              : <option key={o} value={o}>{titleCase(o)}</option>,
+          )}
         </select>
       )
+    }
     case 'textarea':
       return (
         <textarea
@@ -78,6 +96,24 @@ export default function FormModal({ open, onClose, onSubmit, title, fields, reco
     setError('')
   }, [initial, open])
 
+  // Load options for any select fields that pull from another table.
+  const optionTables = useMemo(
+    () => [...new Set(fields.filter((f) => f.optionsTable).map((f) => f.optionsTable))],
+    [fields],
+  )
+  const [dynamicOptions, setDynamicOptions] = useState({})
+  useEffect(() => {
+    if (!open || optionTables.length === 0) return
+    let active = true
+    Promise.all(
+      optionTables.map(async (t) => {
+        try { return [t, await table(t).list({ order: 'created_at', ascending: false })] }
+        catch { return [t, []] }
+      }),
+    ).then((entries) => { if (active) setDynamicOptions(Object.fromEntries(entries)) })
+    return () => { active = false }
+  }, [open, optionTables])
+
   const set = (name, v) => setValues((prev) => ({ ...prev, [name]: v }))
 
   const handleSubmit = async () => {
@@ -133,7 +169,7 @@ export default function FormModal({ open, onClose, onSubmit, title, fields, reco
               {f.label}
               {f.required && <span className="text-red-400"> *</span>}
             </label>
-            <Field field={f} value={values[f.name]} onChange={(v) => set(f.name, v)} />
+            <Field field={f} value={values[f.name]} onChange={(v) => set(f.name, v)} dynamicOptions={dynamicOptions} />
           </div>
         ))}
       </div>

@@ -34,7 +34,7 @@ export const IMPORT_ENTITIES = [
   {
     key: 'daily_production', table: 'daily_production', label: 'Daily Production', required: [],
     fields: [
-      f('date', 'date'), f('uniforms_ready_pickup', 'number'), f('uniforms_carried_out', 'number'),
+      f('date', 'date'), f('order_number'), f('uniforms_ready_pickup', 'number'), f('uniforms_carried_out', 'number'),
       f('uniforms_awaiting_badges', 'number'), f('badges_produced', 'number'), f('notes'),
     ],
   },

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Plus } from 'lucide-react'
+import { Plus, Download } from 'lucide-react'
 import PageHeader from './PageHeader'
 import DataTable from './DataTable'
 import FilterBar from './FilterBar'
@@ -8,6 +8,7 @@ import FormModal from './FormModal'
 import Modal from './Modal'
 import { useCollection } from '../hooks/useCollection'
 import { yearsRange } from '../lib/format'
+import { downloadCSV } from '../lib/csv'
 
 const PAGE_SIZE = 25
 
@@ -100,6 +101,12 @@ export default function ResourcePage({ config, icon, subtitle, kpis, extraAction
     }
   }
 
+  // Export the current (filtered + sorted) view to CSV.
+  const handleExport = () => {
+    const headers = config.fields.map((f) => f.name)
+    downloadCSV(`${config.table}_${new Date().toISOString().slice(0, 10)}.csv`, headers, sorted)
+  }
+
   return (
     <div className="fade-in">
       <PageHeader
@@ -109,6 +116,9 @@ export default function ResourcePage({ config, icon, subtitle, kpis, extraAction
         actions={
           <>
             {extraActions}
+            <button className="btn-ghost" onClick={handleExport} disabled={!sorted.length} title="Export current view to CSV">
+              <Download size={16} /> Export CSV
+            </button>
             <button className="btn-primary" onClick={() => { setEditing(null); setFormOpen(true) }}>
               <Plus size={16} /> New {config.singular}
             </button>

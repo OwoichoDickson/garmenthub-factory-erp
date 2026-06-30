@@ -7,6 +7,7 @@
 create table if not exists public.daily_production (
   id                         uuid primary key default gen_random_uuid(),
   date                       date not null default current_date,
+  order_number               text,            -- selected from existing production orders
   uniforms_ready_pickup      int  default 0,   -- finished uniforms ready to be collected
   uniforms_carried_out       int  default 0,   -- collected / dispatched that day
   uniforms_awaiting_badges   int  default 0,   -- uniforms done but waiting for badges
